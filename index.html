@@ -18,86 +18,16 @@
 	<!-- Meta tags facebook  -->
 	<meta property="og:locale" content="pt_BR">
 	<meta property="og:type" content="website">
-
-	<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key= AlKmiJa4K3R_3YiMGAaAhmHMO4Web1JySuN_m-oDk9xHPU3HnHENQD02ChwXa_4S&callback=loadMapScenario' async defer></script>
-
-	<!-- jQuery -->
-<script src="js/jquery-3.2.1.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/popper.min.js"></script>
-<script src="bootstrap-4.1.1-dist/js/bootstrap.js"></script>
-	<script type='text/javascript'>
-
-		//op1 - http://apiadvisor.climatempo.com.br/api/v1/weather/locale/3477/current?token=b44ef21d045c4b7885fadb9aba6f5796
-	//op2 - http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=d6434d7681bf45d8f93d5ab8048c219f&units=metric
-
-		function getClima(lat, long, local){
-			$.ajax({
-			    url: "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+long+"&appid=d6434d7681bf45d8f93d5ab8048c219f&units=metric",
-			    type: "GET",
-			    crossDomain: true,
-			    dataType: "jsonp",
-			    success: function (response) {
-			        //var resp = JSON.parse(response);
-			        $('.content-response').html('<b>Temperatura atual: '+response.main.temp+' °C</b><br/><span class=\"min-max-span\">Mínima: '+response.main.temp_min+' °C<br/>Máxima: '+response.main.temp_max+' °C<br/><hr>'+local);
-			        //alert(response.main.temp);
-			    },
-			    error: function (xhr, status) {
-			        alert("error");
-			    }
-			});
-		}
-
-            var map;
-
-        	function loadMapScenario() {
-        		map = new Microsoft.Maps.Map(document.getElementById('myMap'), {});
-        		map.setView({
-                    center: new Microsoft.Maps.Location(-18.708035, -39.878608),
-                    zoom: 15
-                });
-
-                Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', {
-                    callback: onLoad,
-                    errorCallback: onError
-                });
-                function onLoad() {
-                    var options = { maxResults: 5 };
-                    var manager = new Microsoft.Maps.AutosuggestManager(options);
-                    manager.attachAutosuggest('#searchBox', '#searchBoxContainer', selectedSuggestion);
-                }
-                function onError(message) {
-                    document.getElementById('printoutPanel').innerHTML = message;
-                }
-                function selectedSuggestion(suggestionResult) {
-                    var latitude, longitude, local;
-                    latitude = suggestionResult.location.latitude;
-                    longitude = suggestionResult.location.longitude;
-                    local = suggestionResult.formattedSuggestion;
-
-                    
-                    map.setView({
-	                    center: new Microsoft.Maps.Location(latitude, longitude),
-	                    zoom: 15
-	                });
-	                var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), null);
-                	map.entities.push(pushpin);
-
-                   	getClima(latitude, longitude, local);
-                }
-                
-            }
-    </script>
 </head>
 
 <body onload='loadMapScenario();'>
 	<div class='container-fluid'>
 		<div class='row'>
 			<div class='col-md-3 content-info-clima'>
-				<h3>Sistema de consulta do clima</h3>
+				<h3 align='center'>Sistema de consulta do clima</h3>
 				<div id='searchBoxContainer' class='form-group'>
 					<input class='form-control' type= 'text' id= 'searchBox' placeholder='Informe um local...' />
+					<p class='text-small'>Após a busca, clique para selecionar o endereço e carregar as informações sobre o clima.</p>
 				</div>			
 				<div class='content-response'>
         
@@ -115,10 +45,17 @@
 			</div>
 		</div>
 	</div>
-</body>
 
+	<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key= AlKmiJa4K3R_3YiMGAaAhmHMO4Web1JySuN_m-oDk9xHPU3HnHENQD02ChwXa_4S&callback=loadMapScenario' async defer></script>
 
-	
+	<!-- jQuery -->
+	<script src="js/jquery-3.2.1.min.js"></script>
 
-</script>
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/popper.min.js"></script>
+
+	<script src="bootstrap-4.1.1-dist/js/bootstrap.js"></script>
+
+	<script src="js/main.js"></script>
+	</body>
 </html>

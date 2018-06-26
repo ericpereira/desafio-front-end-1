@@ -45,3 +45,10 @@
 .min-max-span{
 	font-size: 10pt;
 }
+
+.text-small{
+	padding-top: 5px;
+	font-size: 9pt;
+	color: #B8B8B8;
+	text-align: center;
+}
